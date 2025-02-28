@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
@@ -31,10 +31,14 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <a href="#" className="flex items-center">
+        <a href="#" className="flex items-center space-x-2">
+          <div className="h-10 w-10 relative flex items-center justify-center">
+            <GraduationCap className="h-8 w-8 text-primary" />
+            <div className="absolute inset-0 bg-primary/20 rounded-full animate-pulse"></div>
+          </div>
           <span className="text-2xl font-serif font-bold tracking-tight">
-            Athena
-            <span className="text-primary">University</span>
+            Pegasus
+            <span className="text-primary">CS</span>
           </span>
         </a>
 
@@ -43,17 +47,17 @@ const Navbar = () => {
           <a href="#programs" className="text-sm font-medium hover-underline">
             Programs
           </a>
-          <a href="#testimonials" className="text-sm font-medium hover-underline">
-            Testimonials
+          <a href="#research" className="text-sm font-medium hover-underline">
+            Research
           </a>
-          <a href="#campus" className="text-sm font-medium hover-underline">
-            Campus
+          <a href="#faculty" className="text-sm font-medium hover-underline">
+            Faculty
           </a>
           <a href="#contact" className="text-sm font-medium hover-underline">
             Contact
           </a>
           <Button size="sm" variant="outline" className="ml-2">
-            Visit
+            Resources
           </Button>
           <Button size="sm">Apply Now</Button>
         </nav>
@@ -84,18 +88,18 @@ const Navbar = () => {
               Programs
             </a>
             <a
-              href="#testimonials"
+              href="#research"
               className="text-sm font-medium px-4 py-2 rounded-md hover:bg-accent"
               onClick={() => setIsMenuOpen(false)}
             >
-              Testimonials
+              Research
             </a>
             <a
-              href="#campus"
+              href="#faculty"
               className="text-sm font-medium px-4 py-2 rounded-md hover:bg-accent"
               onClick={() => setIsMenuOpen(false)}
             >
-              Campus
+              Faculty
             </a>
             <a
               href="#contact"
@@ -111,7 +115,7 @@ const Navbar = () => {
                 className="flex-1"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Visit
+                Resources
               </Button>
               <Button
                 size="sm"

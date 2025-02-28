@@ -1,65 +1,102 @@
 
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { ArrowRight, BookOpen, Globe, Building, GraduationCap } from "lucide-react";
+import { ArrowRight, Code, Database, Globe, Server, Cpu, VectorTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-// We'll simulate the framer-motion library for animation
-const motionDiv = ({ children, ...props }: any) => {
-  const [inViewRef, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  return (
-    <div
-      ref={inViewRef}
-      className={`transition-all duration-700 ${
-        inView
-          ? "opacity-100 translate-y-0"
-          : "opacity-0 translate-y-10"
-      }`}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-};
 
 const programs = [
   {
     id: 1,
-    title: "Computer Science",
-    description: "Develop cutting-edge skills in programming, AI, and software engineering.",
-    icon: <BookOpen className="h-10 w-10 text-primary" />,
+    title: "Artificial Intelligence",
+    description: "Develop intelligent systems using machine learning, neural networks, and advanced algorithms.",
+    icon: <Cpu className="h-10 w-10 text-primary" />,
     featured: true,
   },
   {
     id: 2,
-    title: "Business Administration",
-    description: "Build a foundation in management, finance, marketing, and entrepreneurship.",
-    icon: <Building className="h-10 w-10 text-primary" />,
+    title: "Software Engineering",
+    description: "Master software development practices, architecture, and agile methodologies.",
+    icon: <Code className="h-10 w-10 text-primary" />,
     featured: false,
   },
   {
     id: 3,
-    title: "Global Studies",
-    description: "Explore international relations, cultures, and global challenges.",
-    icon: <Globe className="h-10 w-10 text-primary" />,
+    title: "Data Science",
+    description: "Extract insights from complex data using statistical analysis and visualization techniques.",
+    icon: <Database className="h-10 w-10 text-primary" />,
     featured: false,
   },
   {
     id: 4,
-    title: "Liberal Arts",
-    description: "Gain a well-rounded education across humanities, sciences, and arts.",
-    icon: <GraduationCap className="h-10 w-10 text-primary" />,
+    title: "Computer Graphics",
+    description: "Create stunning visuals, 3D models, and interactive simulations using advanced rendering.",
+    icon: <VectorTriangle className="h-10 w-10 text-primary" />,
     featured: false,
+  },
+];
+
+const codeExamples = [
+  {
+    language: "Python",
+    code: `def neural_network(inputs, weights):
+    # Feedforward
+    layer1 = sigmoid(np.dot(inputs, weights[0]))
+    layer2 = sigmoid(np.dot(layer1, weights[1]))
+    return layer2
+
+def train_network(training_data):
+    # Implementation details
+    pass`,
+  },
+  {
+    language: "JavaScript",
+    code: `function createVirtualDOM(element) {
+  if (typeof element === 'string') {
+    return document.createTextNode(element);
+  }
+  
+  const $el = document.createElement(element.type);
+  
+  for (const [key, value] of Object.entries(element.props || {})) {
+    $el.setAttribute(key, value);
+  }
+  
+  for (const child of element.children || []) {
+    $el.appendChild(createVirtualDOM(child));
+  }
+  
+  return $el;
+}`,
+  },
+  {
+    language: "Java",
+    code: `public class BinarySearchTree<T extends Comparable<T>> {
+    private Node<T> root;
+    
+    public void insert(T value) {
+        root = insertRec(root, value);
+    }
+    
+    private Node<T> insertRec(Node<T> root, T value) {
+        if (root == null) {
+            return new Node<>(value);
+        }
+        
+        if (value.compareTo(root.value) < 0) {
+            root.left = insertRec(root.left, value);
+        } else if (value.compareTo(root.value) > 0) {
+            root.right = insertRec(root.right, value);
+        }
+        
+        return root;
+    }
+}`,
   },
 ];
 
 const Programs = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [codeIndex, setCodeIndex] = useState(0);
   const intervalRef = useRef<number | null>(null);
 
   const startAutoPlay = () => {
@@ -80,6 +117,14 @@ const Programs = () => {
     return () => stopAutoPlay();
   }, []);
 
+  useEffect(() => {
+    const codeInterval = setInterval(() => {
+      setCodeIndex((prev) => (prev + 1) % codeExamples.length);
+    }, 8000);
+
+    return () => clearInterval(codeInterval);
+  }, []);
+
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -93,17 +138,17 @@ const Programs = () => {
             className="inline-block px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-sm font-medium mb-4"
             ref={ref}
           >
-            Academic Excellence
+            Academic Pathways
           </div>
           <h2 className={`text-3xl md:text-4xl font-serif font-bold mb-6 transition-all duration-700 ${
             inView ? "opacity-100" : "opacity-0"
           }`}>
-            Discover Your Path with Our Premier Programs
+            Specialized Computer Science Programs
           </h2>
           <p className={`text-muted-foreground text-lg transition-all duration-700 delay-100 ${
             inView ? "opacity-100" : "opacity-0"
           }`}>
-            Our academically rigorous programs are designed to challenge, inspire, and prepare you for a successful future.
+            Our cutting-edge curriculum prepares you for the most in-demand tech careers with hands-on learning and industry partnerships.
           </p>
         </div>
 
@@ -145,30 +190,40 @@ const Programs = () => {
             ))}
           </div>
 
-          <div className="rounded-2xl overflow-hidden relative h-[500px] shadow-xl">
+          <div className="rounded-2xl overflow-hidden relative h-[500px] shadow-xl glass">
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent z-10"></div>
-            <img
-              src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b"
-              alt="Technology classroom"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
-              <div className="glass rounded-xl p-6">
+            <div className="absolute inset-0 flex flex-col justify-between p-6 z-20">
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex space-x-2">
+                  <div className="h-3 w-3 rounded-full bg-destructive"></div>
+                  <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
+                  <div className="h-3 w-3 rounded-full bg-green-500"></div>
+                </div>
+                <div className="text-xs font-medium opacity-60">
+                  {codeExamples[codeIndex].language}
+                </div>
+              </div>
+              
+              <div className="code-block text-xs md:text-sm font-mono overflow-auto flex-1">
+                <pre>{codeExamples[codeIndex].code}</pre>
+              </div>
+              
+              <div className="glass rounded-xl p-6 mt-4">
                 <h3 className="text-2xl font-serif font-semibold mb-3">
                   Program Highlights
                 </h3>
                 <ul className="space-y-2 mb-6">
                   <li className="flex items-center">
                     <div className="h-2 w-2 rounded-full bg-primary mr-3"></div>
-                    <span>Cutting-edge research opportunities</span>
+                    <span>Research opportunities with faculty</span>
                   </li>
                   <li className="flex items-center">
                     <div className="h-2 w-2 rounded-full bg-primary mr-3"></div>
-                    <span>Industry-experienced faculty</span>
+                    <span>Internships at leading tech companies</span>
                   </li>
                   <li className="flex items-center">
                     <div className="h-2 w-2 rounded-full bg-primary mr-3"></div>
-                    <span>State-of-the-art facilities</span>
+                    <span>State-of-the-art computing facilities</span>
                   </li>
                 </ul>
                 <Button className="w-full group">
